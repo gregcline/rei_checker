@@ -3,3 +3,5 @@
 /bin/
 /.shards/
 queries.json
+rei_checker.dwarf
+rei_checker

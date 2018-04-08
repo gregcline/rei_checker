@@ -1,5 +1,8 @@
 require "json"
 
+# This file defines mappings from JSON to Crystal classes. These and the
+# product/query classes can probably be combined but I haven't gotten to it yet.
+
 class SearchData
   JSON.mapping(
     name: String,

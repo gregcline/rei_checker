@@ -1,17 +1,8 @@
 require "colorize"
 
-alias ColorString = (Colorize::Object(String) | String)
-
-module JSONInterface
-  def missing(field_name)
-    "#{field_name} seems to be missing here, run with --debug to see the raw JSON".colorize(:red).to_s
-  end
-end
-
+# Represents a single product returned by the API.
 class Product
-  include JSONInterface
-
-  getter name : ColorString, colors : Array(Color), price : Price
+  getter name : String, colors : Array(Color), price : Price
 
   def initialize(info)
     @name = info.cleanTitle
@@ -40,24 +31,19 @@ And costs:
   end
 
   private def pricify(displayPrice)
-    # if displayPrice.nil?
-    #   missing("displayPrice")
-    # else
       Price.new(displayPrice)
-    # end
   end
 end
 
+# Represents a color. Vendor color is what the product's manufacturer calls the
+# color and color is how REI refers to it for things like refinements. I include
+# both to be a little more descriptive.
 class Color
-  include JSONInterface
-
-  getter color : ColorString, vendor_color : ColorString
+  getter color : String, vendor_color : String
 
   def initialize(color)
     @color = color.color
     @vendor_color = color.vendorColor
-    # @color = color["color"] || missing("color")
-    # @vendor_color = color["vendorColor"] || missing("vendorColor")
   end
 
   def to_s
@@ -65,9 +51,9 @@ class Color
   end
 end
 
+# Represents a price. It will display differently depending on whether the
+# product is on sale.
 class Price
-  include JSONInterface
-
   alias MaybeString = (String | Nil)
 
   getter price : MaybeString, savings : MaybeString
@@ -96,8 +82,12 @@ class Price
     savings != "0%"
   end
 
-  def failure?
+  private def failure?
     savings.nil? && price.nil?
+  end
+
+  private def missing(field_name)
+    "#{field_name} seems to be missing here, run with --debug to see the raw JSON".colorize(:red).to_s
   end
 end
 
