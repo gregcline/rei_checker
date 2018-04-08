@@ -1,0 +1,21 @@
+{
+  "url": "https://www.rei.com/rest/search/results",
+  "queries": [
+    {
+      "name": "Hiking Pack",
+      "params": {
+        "q": "osprey exos",
+        "ir": "q:osprey exos",
+        "r": "color:Green"
+      }
+    },
+    {
+      "name": "Base Layer",
+      "params": {
+        "q": "smartwool 150",
+        "ir": "q:smartwool 150",
+        "r": "gender:Women's;size:Small;color:Gray;shirt-style:Crew-neck"
+      }
+    }
+  ]
+}
